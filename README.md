@@ -26,7 +26,7 @@ Also, you may build NuGet package yourself:
 
 In your unit test file, initialize ``` DriverRunner ``` instance with list of ``` IWebDriver ``` instances (Chrome, Firefox, Edge, etc.).
 
-```
+```csharp
 private readonly DriverRunner _driverRunner = new DriverRunner(() =>
 {
     var chromeDriver = new ChromeDriver(
@@ -48,7 +48,7 @@ private readonly DriverRunner _driverRunner = new DriverRunner(() =>
 Then, use ``` AttachBrowserAction ``` to attach action, that will be executed on each driver. 
 Wrap your code with ``` using ``` block, so, in case of failure, drivers will be properly closed and disposed.
 
-```
+```csharp
 [TestMethod]
 public async Task TestMethodExample()
 {
