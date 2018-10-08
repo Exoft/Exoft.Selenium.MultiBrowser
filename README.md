@@ -4,9 +4,23 @@ Wrapper for [Selenium](https://www.seleniumhq.org/) ``` IWebDriver ``` to execut
 
 ### Installation
 
-1. Clone and build solution;
-2. In ```Exoft.Selenium.MultiBrowser.Core\bin\Debug```, nuget package will be generated (```Exoft.Selenium.MultiBrowser.Core.*.*.*.nupkg```);
-3. Include nuget package (```Exoft.Selenium.MultiBrowser.Core.*.*.*.nupkg```) into your test project.
+```Exoft.Selenium.MultiBrowser.Core``` NuGet package is available from NuGet Package Manager.
+
+You can install package: 
+
+##### via Package Manager:
+```
+Install-Package Exoft.Selenium.MultiBrowser.Core
+```
+##### via .NET CLI:
+```
+dotnet add package Exoft.Selenium.MultiBrowser.Core
+```
+
+Also, you may build NuGet package yourself:
+ 1. Clone and build solution;
+ 2. In ```Exoft.Selenium.MultiBrowser.Core\bin\Debug```, nuget package will be generated (```Exoft.Selenium.MultiBrowser.Core.*.*.*.nupkg```);
+ 3. Include nuget package (```Exoft.Selenium.MultiBrowser.Core.*.*.*.nupkg```) into your test project.
  
 ### How to use
 
