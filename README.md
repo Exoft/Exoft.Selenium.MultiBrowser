@@ -2,6 +2,12 @@
 
 Wrapper for [Selenium](https://www.seleniumhq.org/) ``` IWebDriver ``` to execute actions on different browsers simultaneously.
 
+### Installation
+
+1. Clone and build solution;
+2. In ```Exoft.Selenium.MultiBrowser.Core\bin\Debug```, nuget package will be generated (```Exoft.Selenium.MultiBrowser.Core.*.*.*.nupkg```);
+3. Include nuget package (```Exoft.Selenium.MultiBrowser.Core.*.*.*.nupkg```) into your test project.
+ 
 ### How to use
 
 In your unit test file, initialize ``` DriverRunner ``` instance with list of ``` IWebDriver ``` instances (Chrome, Firefox, Edge, etc.).
