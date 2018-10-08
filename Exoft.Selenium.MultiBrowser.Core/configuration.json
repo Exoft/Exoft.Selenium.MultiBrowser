@@ -1,0 +1,13 @@
+{
+  "Drivers": {
+    "Chrome": {
+      "Path": "D:\\Projects\\New folder\\IWebDriver.MultiDriverWrapper\\IDriverWrapper\\drivers\\"
+    },
+    "Firefox": {
+      "Path": "D:\\Projects\\New folder\\IWebDriver.MultiDriverWrapper\\IDriverWrapper\\drivers\\"
+    },
+    "IE": {
+      "Path": "D:\\Projects\\New folder\\IWebDriver.MultiDriverWrapper\\IDriverWrapper\\drivers\\"
+    } 
+  }
+}
