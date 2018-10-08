@@ -5,36 +5,20 @@ using System.Threading.Tasks;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
-using OpenQA.Selenium.Remote;
 
 namespace Exoft.Selenium.MultiBrowser.Core
 {
-    public class DriverRunner
+    public class DriverRunner: IDisposable
     {
         private readonly DriverStore _browserStore;
 
-        public DriverRunner(ScenarioType scenarioType)
+        public DriverRunner(IEnumerable<IWebDriver> drivers)
         {
-            switch (scenarioType)
-            {
-                case ScenarioType.All:
-                    {
-                        var chromeDriver = new ChromeDriver(
-                                @"D:\Projects\Exoft.Selenium.MultiBrowser\Exoft.Selenium.MultiBrowser.Core\drivers\");
+            _browserStore = new DriverStore(drivers);
+        }
 
-                        var firefoxDriver = new FirefoxDriver(
-                                @"D:\Projects\Exoft.Selenium.MultiBrowser\Exoft.Selenium.MultiBrowser.Core\drivers\");
-
-                        var drivers = new List<IWebDriver>()
-                        {
-                            chromeDriver,
-                            firefoxDriver
-                        };
-
-                        _browserStore = new DriverStore(drivers);
-                        break;
-                    }
-            }
+        public DriverRunner(Func<IEnumerable<IWebDriver>> initFunc) : this(initFunc())
+        {
         }
 
         public void AttachBrowserAction(Func<IWebDriver, IWebDriver> action)
@@ -42,13 +26,21 @@ namespace Exoft.Selenium.MultiBrowser.Core
             _browserStore.AttachAction(action);
         }
 
-        public async Task ExecuteAndClose()
+        public async Task Execute()
         {
             var tasks = new List<Task>();
 
-            _browserStore.Drivers.ForEach(driver => tasks.Add(Task.Factory.StartNew(() => _browserStore.DriverAction(driver))));
+            foreach (var webDriver in _browserStore.Drivers)
+            {
+                tasks.Add(Task.Factory.StartNew(() => _browserStore.DriverAction(webDriver)));
+            }
 
             await Task.WhenAll(tasks);
+        }
+
+        public void Dispose()
+        {
+            _browserStore.QuitAllDrivers();
         }
     }
 }

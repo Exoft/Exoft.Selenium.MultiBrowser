@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using OpenQA.Selenium;
 
 namespace Exoft.Selenium.MultiBrowser.Core
 {
-    public class DriverStore: IDisposable
+    public class DriverStore
     {
-        public List<IWebDriver> Drivers { get; }
+        public IEnumerable<IWebDriver> Drivers { get; }
         public Func<IWebDriver, IWebDriver> DriverAction { get; private set; } = driver => driver;
 
-        public DriverStore(List<IWebDriver> drivers)
+        public DriverStore(IEnumerable<IWebDriver> drivers)
         {
             Drivers = drivers;
         }
@@ -19,12 +20,12 @@ namespace Exoft.Selenium.MultiBrowser.Core
             DriverAction += action;
         }
 
-        public void Dispose()
+        public void QuitAllDrivers()
         {
-            Drivers.ForEach(driver =>
+            foreach (var webDriver in Drivers)
             {
-                driver.Quit();
-            });
+                webDriver.Quit();
+            }
         }
     }
 }
