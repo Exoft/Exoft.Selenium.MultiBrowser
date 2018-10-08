@@ -23,7 +23,6 @@ namespace Exoft.Selenium.MultiBrowser.Core
         {
             Drivers.ForEach(driver =>
             {
-                driver.Close();
                 driver.Quit();
             });
         }

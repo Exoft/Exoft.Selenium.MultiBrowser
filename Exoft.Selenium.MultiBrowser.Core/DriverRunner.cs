@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Threading.Tasks;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
@@ -18,13 +19,11 @@ namespace Exoft.Selenium.MultiBrowser.Core
             {
                 case ScenarioType.All:
                     {
-                        var chromeDriver =
-                            CreateDriver<ChromeDriver>(
-                                @"D:\Projects\Exoft.Selenium.MultiBrowser\Exoft.Selenium.MultiBrowser.Core\drivers");
+                        var chromeDriver = new ChromeDriver(
+                                @"D:\Projects\Exoft.Selenium.MultiBrowser\Exoft.Selenium.MultiBrowser.Core\drivers\");
 
-                        var firefoxDriver =
-                            CreateDriver<FirefoxDriver>(
-                                @"D:\Projects\Exoft.Selenium.MultiBrowser\Exoft.Selenium.MultiBrowser.Core\drivers");
+                        var firefoxDriver = new FirefoxDriver(
+                                @"D:\Projects\Exoft.Selenium.MultiBrowser\Exoft.Selenium.MultiBrowser.Core\drivers\");
 
                         var drivers = new List<IWebDriver>()
                         {
@@ -38,13 +37,6 @@ namespace Exoft.Selenium.MultiBrowser.Core
             }
         }
 
-        private T CreateDriver<T>(string driverPath) where T : RemoteWebDriver
-        {
-            var driver = Activator.CreateInstance(typeof(T), driverPath) as T;
-
-            return driver;
-        }
-
         public void AttachBrowserAction(Func<IWebDriver, IWebDriver> action)
         {
             _browserStore.AttachAction(action);
@@ -54,7 +46,7 @@ namespace Exoft.Selenium.MultiBrowser.Core
         {
             var tasks = new List<Task>();
 
-            _browserStore.Drivers.ForEach(driver => tasks.Add(new Task(() => _browserStore.DriverAction(driver))));
+            _browserStore.Drivers.ForEach(driver => tasks.Add(Task.Factory.StartNew(() => _browserStore.DriverAction(driver))));
 
             await Task.WhenAll(tasks);
         }
