@@ -4,15 +4,29 @@ Wrapper for [Selenium](https://www.seleniumhq.org/) ``` IWebDriver ``` to execut
 
 ### Installation
 
-1. Clone and build solution;
-2. In ```Exoft.Selenium.MultiBrowser.Core\bin\Debug```, nuget package will be generated (```Exoft.Selenium.MultiBrowser.Core.*.*.*.nupkg```);
-3. Include nuget package (```Exoft.Selenium.MultiBrowser.Core.*.*.*.nupkg```) into your test project.
+```Exoft.Selenium.MultiBrowser.Core``` NuGet package is available from NuGet Package Manager.
+
+You can install package: 
+
+##### via Package Manager:
+```
+Install-Package Exoft.Selenium.MultiBrowser.Core
+```
+##### via .NET CLI:
+```
+dotnet add package Exoft.Selenium.MultiBrowser.Core
+```
+
+Also, you may build NuGet package yourself:
+ 1. Clone and build solution;
+ 2. In ```Exoft.Selenium.MultiBrowser.Core\bin\Debug```, nuget package will be generated (```Exoft.Selenium.MultiBrowser.Core.*.*.*.nupkg```);
+ 3. Include nuget package (```Exoft.Selenium.MultiBrowser.Core.*.*.*.nupkg```) into your test project.
  
 ### How to use
 
 In your unit test file, initialize ``` DriverRunner ``` instance with list of ``` IWebDriver ``` instances (Chrome, Firefox, Edge, etc.).
 
-```
+```csharp
 private readonly DriverRunner _driverRunner = new DriverRunner(() =>
 {
     var chromeDriver = new ChromeDriver(
@@ -34,7 +48,7 @@ private readonly DriverRunner _driverRunner = new DriverRunner(() =>
 Then, use ``` AttachBrowserAction ``` to attach action, that will be executed on each driver. 
 Wrap your code with ``` using ``` block, so, in case of failure, drivers will be properly closed and disposed.
 
-```
+```csharp
 [TestMethod]
 public async Task TestMethodExample()
 {
