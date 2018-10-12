@@ -52,21 +52,20 @@ Wrap your code with ``` using ``` block, so, in case of failure, drivers will be
 [TestMethod]
 public async Task TestMethodExample()
 {
+    _driverRunner.AttachBrowserAction((driver) =>
+    {
+        driver.Navigate().GoToUrl("https://www.google.com/");
+        return driver;
+    });
+
+    _driverRunner.AttachBrowserAction((driver) =>
+    {
+        driver.Navigate().GoToUrl("https://www.yahoo.com/");
+        return driver;
+    });
+
     using (_driverRunner)
     {
-        _driverRunner.AttachBrowserAction((driver) =>
-        {
-            driver.Navigate().GoToUrl("https://www.google.com/");
-            return driver;
-        });
-
-        _driverRunner.AttachBrowserAction((driver) =>
-        {
-            Assert.AreEqual(driver.Url, "https://www.google.com/");
-            driver.Quit();
-            return driver;
-        });
-
         await _driverRunner.Execute();
     }
 }
